@@ -179,9 +179,6 @@
 				"type": "string"
 			}
 		},
-		"folder": {
-			"name": "Bronze"
-		},
 		"annotations": [],
 		"lastPublishTime": "2020-09-23T12:36:11Z"
 	},
