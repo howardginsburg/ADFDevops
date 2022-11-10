@@ -1,15 +1,10 @@
 {
 	"name": "KeyVault",
 	"properties": {
-		"parameters": {
-			"KeyVaultURI": {
-				"type": "string"
-			}
-		},
 		"annotations": [],
 		"type": "AzureKeyVault",
 		"typeProperties": {
-			"baseUrl": "@{linkedService().KeyVaultURI}"
+			"baseUrl": "https://hsg-keyvault-dev.vault.azure.net/"
 		}
 	}
 }
