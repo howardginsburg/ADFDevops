@@ -9,7 +9,7 @@
 		"annotations": [],
 		"type": "AzureKeyVault",
 		"typeProperties": {
-			"baseUrl": "https://hsg-keyvault-dev.vault.azure.net/"
+			"baseUrl": "@{linkedService().KeyVaultURI}"
 		}
 	}
 }
