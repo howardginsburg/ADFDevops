@@ -1,11 +1,10 @@
 {
 	"name": "DataLake",
-	"type": "Microsoft.DataFactory/factories/linkedservices",
 	"properties": {
 		"annotations": [],
 		"type": "AzureBlobFS",
 		"typeProperties": {
-			"url": "https://adfdevlake.dfs.core.windows.net",
+			"url": "https://adfdevdatalake.dfs.core.windows.net/",
 			"accountKey": {
 				"type": "AzureKeyVaultSecret",
 				"store": {
@@ -15,5 +14,6 @@
 				"secretName": "DataLake"
 			}
 		}
-	}
+	},
+	"type": "Microsoft.DataFactory/factories/linkedservices"
 }
