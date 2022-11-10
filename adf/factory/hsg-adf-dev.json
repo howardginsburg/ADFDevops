@@ -5,6 +5,10 @@
 			"FeatureA": {
 				"type": "bool",
 				"value": true
+			},
+			"KeyVaultURI": {
+				"type": "string",
+				"value": "https://hsg-keyvault-dev.vault.azure.net/"
 			}
 		}
 	},
