@@ -1,6 +1,11 @@
 {
 	"name": "KeyVault",
 	"properties": {
+		"parameters": {
+			"KeyVaultURI": {
+				"type": "string"
+			}
+		},
 		"annotations": [],
 		"type": "AzureKeyVault",
 		"typeProperties": {
