@@ -6,7 +6,14 @@
 			{
 				"name": "CopyTableData",
 				"type": "Copy",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "If FeatureA",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "7.00:00:00",
 					"retry": 0,
@@ -19,7 +26,7 @@
 					"source": {
 						"type": "AzureSqlSource",
 						"sqlReaderQuery": {
-							"value": "select * from @{item().source.table} where ModifiedDate >= '@{activity('Watermark Lookup').output.firstRow.WatermarkValue}'",
+							"value": "@variables('TableSelect')",
 							"type": "Expression"
 						},
 						"partitionOption": "None"
@@ -51,7 +58,7 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"ConnectionStringSecretName": {
-								"value": "@item().keyvaultsecret",
+								"value": "AdventureWorksSQL",
 								"type": "Expression"
 							}
 						}
@@ -63,11 +70,11 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"FileName": {
-								"value": "@item().destination.filename",
+								"value": "Customers.csv",
 								"type": "Expression"
 							},
 							"FolderPath": {
-								"value": "@item().destination.folderpath",
+								"value": "featuredemo/customers/",
 								"type": "Expression"
 							},
 							"TriggerTime": {
