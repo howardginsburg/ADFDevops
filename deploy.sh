@@ -19,3 +19,5 @@ watermark="watermark$rand-sqlserver"
 az sql db create --resource-group $azureResourceGroup --server $watermark --name watermark --edition GeneralPurpose --family Gen5 --capacity 2 --compute-model Serverless --auto-pause-delay 60
 
 datalake="datalake$"
+
+#test   
