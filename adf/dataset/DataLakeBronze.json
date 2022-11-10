@@ -1,0 +1,42 @@
+{
+	"name": "DataLakeBronze",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "DataLake",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"FileName": {
+				"type": "String"
+			},
+			"FolderPath": {
+				"type": "string"
+			},
+			"TriggerTime": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": {
+					"value": "@replace(dataset().FileName,'.csv',concat(formatDateTime(dataset().TriggerTime,'yyyyMMdd'),'.csv'))",
+					"type": "Expression"
+				},
+				"folderPath": {
+					"value": "@concat(dataset().FolderPath,formatDateTime(dataset().TriggerTime,'yyyy/MM/dd'))",
+					"type": "Expression"
+				},
+				"fileSystem": "lake"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
