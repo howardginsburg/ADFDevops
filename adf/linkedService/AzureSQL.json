@@ -12,7 +12,7 @@
 			"connectionString": {
 				"type": "AzureKeyVaultSecret",
 				"store": {
-					"referenceName": "OpenHackKV",
+					"referenceName": "KeyVault",
 					"type": "LinkedServiceReference"
 				},
 				"secretName": {
