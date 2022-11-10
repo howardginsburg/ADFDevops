@@ -1,0 +1,12 @@
+{
+	"name": "hsg-adf-dev",
+	"properties": {
+		"globalParameters": {
+			"FeatureA": {
+				"type": "bool",
+				"value": true
+			}
+		}
+	},
+	"location": "eastus"
+}
