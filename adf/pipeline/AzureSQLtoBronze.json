@@ -1,0 +1,189 @@
+{
+	"name": "AzureSQLtoBronze",
+	"properties": {
+		"description": "Generic copy pipeline that uses a watermark to know when the last load took place for incremental changes.",
+		"activities": [
+			{
+				"name": "LoopThroughTables",
+				"type": "ForEach",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@pipeline().parameters.Tables",
+						"type": "Expression"
+					},
+					"activities": [
+						{
+							"name": "CopyTableData",
+							"type": "Copy",
+							"dependsOn": [
+								{
+									"activity": "Watermark Lookup",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "AzureSqlSource",
+									"sqlReaderQuery": {
+										"value": "select * from @{item().source.table} where UpdatedDate >= '@{activity('Watermark Lookup').output.firstRow.WatermarkValue}'",
+										"type": "Expression"
+									},
+									"partitionOption": "None"
+								},
+								"sink": {
+									"type": "DelimitedTextSink",
+									"storeSettings": {
+										"type": "AzureBlobFSWriteSettings"
+									},
+									"formatSettings": {
+										"type": "DelimitedTextWriteSettings",
+										"quoteAllText": true,
+										"fileExtension": ".txt"
+									}
+								},
+								"enableStaging": false,
+								"validateDataConsistency": true,
+								"logStorageSettings": {
+									"linkedServiceName": {
+										"referenceName": "DataLake",
+										"type": "LinkedServiceReference"
+									},
+									"path": "lake/logs"
+								}
+							},
+							"inputs": [
+								{
+									"referenceName": "AzureSQL",
+									"type": "DatasetReference",
+									"parameters": {
+										"ConnectionStringSecretName": {
+											"value": "@item().keyvaultsecret",
+											"type": "Expression"
+										}
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "DataLakeBronze",
+									"type": "DatasetReference",
+									"parameters": {
+										"FileName": {
+											"value": "@item().destination.filename",
+											"type": "Expression"
+										},
+										"FolderPath": {
+											"value": "@item().destination.folderpath",
+											"type": "Expression"
+										},
+										"TriggerTime": {
+											"value": "@pipeline().parameters.RunDate",
+											"type": "Expression"
+										}
+									}
+								}
+							]
+						},
+						{
+							"name": "Watermark Lookup",
+							"type": "Lookup",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "AzureSqlSource",
+									"sqlReaderQuery": {
+										"value": "SELECT WatermarkValue FROM [dbo].[Watermark] where TableName = '@{item().watermark}'",
+										"type": "Expression"
+									},
+									"queryTimeout": "02:00:00",
+									"partitionOption": "None"
+								},
+								"dataset": {
+									"referenceName": "Watermark",
+									"type": "DatasetReference"
+								}
+							}
+						},
+						{
+							"name": "UpdateWatermark",
+							"type": "SqlServerStoredProcedure",
+							"dependsOn": [
+								{
+									"activity": "CopyTableData",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"storedProcedureName": "[dbo].[sp_updatewatermark]",
+								"storedProcedureParameters": {
+									"LastModifiedtime": {
+										"value": {
+											"value": "@pipeline().TriggerTime",
+											"type": "Expression"
+										},
+										"type": "Datetime"
+									},
+									"TableName": {
+										"value": {
+											"value": "@item().watermark",
+											"type": "Expression"
+										},
+										"type": "String"
+									}
+								}
+							},
+							"linkedServiceName": {
+								"referenceName": "WatermarkSQL",
+								"type": "LinkedServiceReference"
+							}
+						}
+					]
+				}
+			}
+		],
+		"parameters": {
+			"Tables": {
+				"type": "Array"
+			},
+			"RunDate": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "Bronze"
+		},
+		"annotations": [],
+		"lastPublishTime": "2020-09-23T12:36:11Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}
