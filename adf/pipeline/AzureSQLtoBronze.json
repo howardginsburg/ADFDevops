@@ -37,7 +37,7 @@
 								"source": {
 									"type": "AzureSqlSource",
 									"sqlReaderQuery": {
-										"value": "select * from @{item().source.table} where UpdatedDate >= '@{activity('Watermark Lookup').output.firstRow.WatermarkValue}'",
+										"value": "select * from @{item().source.table} where ModifiedDate >= '@{activity('Watermark Lookup').output.firstRow.WatermarkValue}'",
 										"type": "Expression"
 									},
 									"partitionOption": "None"
