@@ -1,0 +1,26 @@
+{
+	"name": "AzureSQL",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSQL",
+			"type": "LinkedServiceReference",
+			"parameters": {
+				"ConnectionStringSecretName": {
+					"value": "@dataset().ConnectionStringSecretName",
+					"type": "Expression"
+				}
+			}
+		},
+		"parameters": {
+			"ConnectionStringSecretName": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "Bronze"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": []
+	}
+}
