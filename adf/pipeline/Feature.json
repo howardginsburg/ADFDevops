@@ -123,9 +123,6 @@
 			}
 		],
 		"parameters": {
-			"Tables": {
-				"type": "Array"
-			},
 			"RunDate": {
 				"type": "string"
 			}
