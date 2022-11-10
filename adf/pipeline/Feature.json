@@ -88,6 +88,18 @@
 						"value": "@pipeline().globalParameters.FeatureA",
 						"type": "Expression"
 					},
+					"ifFalseActivities": [
+						{
+							"name": "Regular Select",
+							"type": "SetVariable",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "TableSelect",
+								"value": "select * from SalesLT.Customer"
+							}
+						}
+					],
 					"ifTrueActivities": [
 						{
 							"name": "Feature A Select",
@@ -96,7 +108,7 @@
 							"userProperties": [],
 							"typeProperties": {
 								"variableName": "TableSelect",
-								"value": "select * from SalesLT.Customer"
+								"value": "select Title, FirstName, LastName from SalesLT.Customer"
 							}
 						}
 					]
