@@ -1,0 +1,35 @@
+[
+    {
+        "source": {
+            "table": "SalesLT.Address"
+        },
+        "destination": {
+            "folderpath": "bronze/adventureworks/",
+            "fileName": "SalesLT.Addresses.csv"
+        },
+        "watermark": "adventureworks.SalesLT.Addresses",
+        "keyvaultsecret": "AdventureworksSQL"
+    },
+    {
+        "source": {
+            "table": "SalesLT.Customer"
+        },
+        "destination": {
+            "folderpath": "bronze/adventureworks/",
+            "fileName": "SalesLT.Customers.csv"
+        },
+        "watermark": "adventureworks.SalesLT.Customer",
+        "keyvaultsecret": "AdventureworksSQL"
+    },
+    {
+        "source": {
+            "table": "SalesLT.Product"
+        },
+        "destination": {
+            "folderpath": "bronze/adventureworks/",
+            "fileName": "SalesLT.Product.csv"
+        },
+        "watermark": "adventureworks.SalesLT.Product",
+        "keyvaultsecret": "AdventureworksSQL"
+    }
+]
