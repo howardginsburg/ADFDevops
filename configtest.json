@@ -1,0 +1,26 @@
+{
+    "resourceGroup": "devops904",
+    "dataFactory": "datafactory904",
+    "globalParameters": {
+        "FeatureA": {
+            "type": "bool",
+            "value": true
+        }
+    },
+    "keyvault": "https://keyvault904.vault.azure.net/",
+    "linkedServices": [
+        "./adf/linkedService/KeyVault.json",
+        "./adf/linkedService/AzureSQL.json",
+        "./adf/linkedService/DataLake.json",
+        "./adf/linkedService/WatermarkSQL.json"
+    ],
+    "datasets": [
+        "./adf/dataset/AzureSQL.json",
+        "./adf/dataset/DataLakeBronze.json",
+        "./adf/dataset/Watermark.json"
+    ],
+    "pipelines": [
+        "./adf/pipeline/AzureSQLtoBronze.json",
+        "./adf/pipeline/Feature.json"
+    ]
+}
