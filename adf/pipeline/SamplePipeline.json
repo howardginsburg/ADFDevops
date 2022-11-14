@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "NotApprovedCopyData",
+				"name": "CopyDataFromSQLToSilver",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
