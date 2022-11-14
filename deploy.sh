@@ -54,4 +54,4 @@ az keyvault secret set --name WatermarkSQL --vault-name $keyvault --value "$wate
 
 #Store the data lake storage account key in key vault.
 datalakesecret=$(az storage account keys list -g $azureResourceGroup -n $datalake --query "[0].value" -o tsv )
-az keyvault secret set --name DataLake --vault-name $keyvault --value $adventureworkssecret
+az keyvault secret set --name DataLake --vault-name $keyvault --value $datalakesecret

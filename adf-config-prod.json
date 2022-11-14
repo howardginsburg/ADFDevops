@@ -1,13 +1,13 @@
 {
-    "resourceGroup": "devops904",
-    "dataFactory": "datafactory904",
+    "resourceGroup": "devops978",
+    "dataFactory": "datafactory978",
     "globalParameters": {
         "FeatureA": {
             "type": "bool",
             "value": false
         }
     },
-    "keyvault": "https://keyvault904.vault.azure.net/",
+    "keyvault": "https://keyvault978.vault.azure.net/",
     "linkedServices": [
         "./adf/linkedService/KeyVault.json",
         "./adf/linkedService/AzureSQL.json",
