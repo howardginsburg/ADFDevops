@@ -17,10 +17,12 @@
     "datasets": [
         "./adf/dataset/AzureSQL.json",
         "./adf/dataset/DataLakeBronze.json",
-        "./adf/dataset/Watermark.json"
+        "./adf/dataset/Watermark.json",
+        "./adf/dataset/DataLakeSilver.json"
     ],
     "pipelines": [
         "./adf/pipeline/AzureSQLtoBronze.json",
-        "./adf/pipeline/Feature.json"
+        "./adf/pipeline/Feature.json",
+        "./adf/pipeline/SamplePipeline.json"
     ]
 }
