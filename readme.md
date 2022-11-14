@@ -59,38 +59,42 @@ This pipeline illustrates how to use feature flags within pipelines by using con
 
 3. Montor the progress of the job and see how the csv file created.
 
+### SamplePipeline
+
+This pipeline serves no functional purpose, but is used to illustrate how we can cherry pick in the config files and stop something from moving from one environment to another.
+
 ## CICD
 
-To illustrate how one might create a pipeline in ADO or GitHub, we can use a script and configuration that will drive what artifacts get deployed.
+To illustrate how one might create a pipeline in ADO or GitHub, we can use a [script](/deploy.sh) and configuration that will drive what artifacts get deployed.  The script will parse the configuration file passed in, delete all the existing items from the data factory, and then deploy just the items that we want there.
 
 ### Simulate QA
 
 For our test environment, we will deploy all of the ADF resources, but disable the feature flag.
 
 1. Run `bash deploy.sh` to create a secondary instance of the environment.
-2. Edit configtest.json
+2. Edit adf-config-test.json
 
     - Update the resource group.
     - Update the data factory name.
     - Update the key vault url.
-    - Change FeatureA to be false.
 
-3. Run `bash updateadf.sh configtest.json`
+3. Run `bash updateadf.sh adf-config-test.json`
+4. Open the instance of Azure Data Factory and note that there are 3 pipelines, and the global parameter for FeatureA is true.
 
 ### Simulate Production
 
 For our production environment, we will deploy all of the ADF resources, disable the feature flag, and prevent a Pipeline from being deployed.
 
 1. Run `bash deploy.sh` to create a secondary instance of the environment.
-2. Edit configprod.json
+2. Edit adf-config-prod.json
 
     - Update the resource group.
     - Update the data factory name.
     - Update the key vault url.
-    - Change FeatureA to be false.
-    - TODO: delete stuff!!
+    - Note that FeatureFlagA is now false and that the pipeline and dataset entries for SamplePipeline have been removed from the file.
 
-3. Run `bash updateadf.sh configprod.json`.
+3. Run `bash updateadf.sh adf-config-prod.json`.
+4. Open the instance of Azure Data Factory and note that there are 2 pipelines, and the global parameter for FeatureA is false.
 
 ## Next Steps
 
